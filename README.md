@@ -5,7 +5,18 @@
 <table>
   <tbody>
     <tr>
-      <td align="center" valign="top" width="14.28%"><img src="https://avatars.githubusercontent.com/u/17216686?v=4" width="100px;" alt="choiseonmun"/><br /><sub><a href="https://github.com/choiseonmun"><b>choiseonmun</b></a></sub><br /></td>
+      <td align="center" valign="top" width="14.28%"><img src="https://avatars.githubusercontent.com/u/17216686?v=4" width="100px;"/><br /><sub><a href="https://github.com/choiseonmun"><b>choiseonmun</b></a></sub><br /></td>
+      <td align="center" valign="top" width="14.28%"><img src="https://avatars.githubusercontent.com/u/21010656?v=4" width="100px;"/><br /><sub><a href="https://github.com/songsunkook"><b>songsunkook</b></a></sub><br /></td>
+      <td align="center" valign="top" width="14.28%"><img src="https://avatars.githubusercontent.com/u/50792467?v=4" width="100px;"/><br /><sub><a href="https://github.com/daepan"><b>daepan</b></a></sub><br /></td>
+      <td align="center" valign="top" width="14.28%"><img src="https://avatars.githubusercontent.com/u/71889359?v=4" width="100px;"/><br /><sub><a href="https://github.com/Invidam"><b>Invidam</b></a></sub><br /></td>
+      <td align="center" valign="top" width="14.28%"><img src="https://avatars.githubusercontent.com/u/72890183?v=4" width="100px;"/><br /><sub><a href="https://github.com/password-kim"><b>password-kim</b></a></sub><br /></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><img src="https://avatars.githubusercontent.com/u/74540646?v=4" width="100px;"/><br /><sub><a href="https://github.com/dooohun"><b>dooohun</b></a></sub><br /></td>
+      <td align="center" valign="top" width="14.28%"><img src="https://avatars.githubusercontent.com/u/79901434?v=4" width="100px;"/><br /><sub><a href="https://github.com/johnny19991006"><b>johnny19991006</b></a></sub><br /></td>
+      <td align="center" valign="top" width="14.28%"><img src="https://avatars.githubusercontent.com/u/91855427?v=4" width="100px;"/><br /><sub><a href="https://github.com/JunghyeonShin"><b>JunghyeonShin</b></a></sub><br /></td>
+      <td align="center" valign="top" width="14.28%"><img src="https://avatars.githubusercontent.com/u/106418303?v=4" width="100px;"/><br /><sub><a href="https://github.com/daheeParkk"><b>daheeParkk</b></a></sub><br /></td>
+      <td align="center" valign="top" width="14.28%"><img src="https://avatars.githubusercontent.com/u/120005202?v=4" width="100px;"/><br /><sub><a href="https://github.com/weweweme"><b>weweweme</b></a></sub><br /></td>
     </tr>
   </tbody>
 </table>
@@ -41,10 +52,10 @@
 3. `Github 계정 이름`으로 디렉토리를 만듭니다.
 4. 디렉토리에 `N주차`의 이름을 가진 마크다운 파일을 생성하고, 내용을 정리합니다.
 > 산출물은 외부에 공개되므로 본인 스스로 만족할 수준으로 작성하시길 바랍니다.
-5. 정리가 완료됐다면 본 리포지터리로 PR을 날립니다.
+5. 정리가 완료됐다면 본 리포지터리로 PR을 날립니다. PR의 제목은 `{닉네임}/{N주차}`입니다.
 6. 모임 때 페어(Pair)끼리 서로의 글을 피드백합니다.
 > 페어는 매 주마다 바뀝니다.
-7. 피드백이 반영됐다면 스터디장이 PR을 승인합니다.
+7. 피드백을 반영한 후 각자 Merge합니다.
 8. 스터디가 끝날 때까지 4번부터 반복합니다.
 
 # 규칙
