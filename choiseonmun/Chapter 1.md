@@ -177,6 +177,78 @@ void PrintDomain(const struct addrinfo* addresses)
 // 223.130.195.95
 ```
 
+## 1-3. 전 세계의 DNS 서버가 연대한다.
+### DNS 동작 원리
+앞서 살펴본 DNS의 동작 원리에 대해서 자세히 살펴보자. HTTP가 요청-응답의 흐름을 가졌던 것처럼 DNS도 질의-응답의 흐름을 가진다. DNS 질의 메시지에는 질의할 도메인 이름, 자원 레코드 유형, 질의 클래스의 정보가 저장되어 있다.
+
+![DNS 질의 메시지 구성](http://www.ktword.co.kr/img_data/4889_1.jpg)
+<div class="img-desc">DNS 메시지의 질의 섹션에 질의할 도메인 이름, 자원 레코드 유형, 질의 클래스 데이터가 저장된다.</div>
+
+질의할 도메인 이름에는 `www.naver.com`와 같이 IP 주소를 얻고 싶은 도메인 이름이 기록된다. 질의 클래스에는 DNS가 고안될 당시에 인터넷 이외에도 다양한 네트워크에 대응하기 위해 해당 정보를 준비했다. 질의 클래스에 저장될 수 있는 값에는 인터넷을 의미하는 `IN`, COAS 네트워크를 의미하는 `CS`, Hesoid 서버를 의미하는 `HS`가 있는데 현재는 인터넷을 제외하고 사용되지 않으므로 질의 클래스 영역에는 항상 `IN`이 저장된다.
+<span class="footnote"> * 괄호 안의 값은 실제 값을 나타낸다.</span>
+
+#### 자원 레코드
+그럼 자원 레코드 유형이란 무엇일까? 먼저 자원 레코드에 대해서 알아보자. 자원 레코드(RR; Resource Record)는 DNS 서버에 저장되는 데이터로 자원 레코드 하나에는 도메인 이름, 값, 유형의 데이터가 저장되어 있다. DNS에 저장될 수 있는 데이터에는 IP 주소 외에도 여러 가지가 존재하는데 유형은 이를 나타낸다. 어떤 유형이냐에 따라 응답하는 내용이 달라진다. 유형에는 여러 가지가 있지만 A, CNAME, MX 대표적인 몇 개만 살펴보자.*
+<span class="footnote"> * 이 외의 유형은 [여기](http://www.ktword.co.kr/test/view/view.php?m_temp1=4889&id=434)를 참고하라</span>
+
+A(Address) 레코드는 자원 레코드의 가장 기본적인 유형으로 IP 주소를 조회하기 위한 용도로 사용된다. 예를 들어 `www.naver.com`을 질의했을 때, DNS 서버에는 아래처럼 자원 레코드가 저장되어 있을 것이다.
+
+| 도메인 이름 | 값 | 유형 |
+| --- | --- | --- |
+| www.naver.com | 223.130.195.200 | A |
+| www.naver.com | 223.130.195.95 | A |
+
+CNAME 레코드는 도메인 이름의 별칭이 저장된 레코드다. 
+
+MX(Mail Exchange)는 이메일에 대한 메일 서버 IP 주소를 조회하기 위한 용도로 사용한다.
+
+#### nslookup
+nslookup을 이용해 DNS 질의를 눈으로 확인해보자.
+
+<!-- nslookup을 이용한 자원 레코드 응답 확인 -->
+
+### 분산 계층 구조
+DNS 서버는 분산 계층 구조를 이루고 있다. 다시 말해 `www.naver.com`을 조회한다고 할 때 하나의 DNS 서버에게 질의하는 것이 아니라 차례대로 상위 계층에 속하는 DNS 서버에게 질의하며 최종 결과를 얻는다. 질의하는 방법에는 반복적 질의(Iterative Queries)와 재귀적 질의(Recursive Queries)가 있다.
+
+<!-- 각 질의 방법 이미지 -->
+
+또, 각 계층에 하나의 DNS 서버만 존재하는 것이 아니라 여러 개의 DNS 서버가 존재하여 원활한 서비스가 이뤄지게 하고 있다. 각 계층의 정보는 도메인 이름에 명시되어 있다.
+
+#### 도메인 이름
+도메인 이름에 대해서 다시 자세히 살펴보자. 도메인 이름의 `.`은 사실 각 계층을 구분하기 위한 것으로 `.`의 오른편에 상위 계층을 적는다. 즉, `www.naver.com`은 `com`이 최상위 계층에 위치함을 나타내고, `naver`가 그 다음 하위 계층을 `www`가 그 다음 하위 계층을 나타낸다. 사실 `com` 위에 더 상위 계층이 존재하는데 이를 루트 도메인(Root Domain)이라 한다. 루트 도메인은 이름이 없어 사실상 생략되는데, `www.naver.com`은 `www.naver.com.`와 같으며 마지막에 위치한 `.`이 루트 도메인을 나타낸다. 계층의 갯수는 가변적이며 최대 128개다. 전세계 도메인 관리는 [ICANN](https://www.icann.org/)이 국내는 [KRNIC](https://xn--3e0bx5euxnjje69i70af08bea817g.xn--3e0b707e/)이 관리하고 있다.
+
+<!-- 도메인 이름 예시 -->
+
+계층에 대해서 조금 더 알아보자. 먼저 루트 서버는 하위 계층인 최상위 도메인에 대한 IP 주소를 제공하고 있다. 루트 서버는 13개 관리 기관에 의해서 관리되고 있으며*, 이 주소는 전세계에 존재하는 모든 DNS 주소가 알고 있다. 그 다음 최상위 도메인 서버는 `com`, `kr`, `org`와 같은 것인데 책임 DNS 서버에 대한 IP 주소를 제공한다.** 책임 DNS 서버는 `naver`, `google` 등과 같이 회사가 관리하며 각 회사의 서비스에 대한 IP 주소를 제공한다. 가령 네이버 웹툰 서비스의 도메인은 `comic.naver.com`인데 이는 네이버 웹툰 홈페이지가 `naver` DNS 서버에 의해 제공되는 것이다.
+<span class="footnote"> * 루트 서버 목록은 [여기](https://www.iana.org/domains/root/servers)서 확인할 수 있다.
+** 최상위 도메인 서버 목록은 [여기](https://www.iana.org/domains/root/db)서 확인 가능하다.</span>
+
+### 캐싱
+같은 호스트에 접속하는 일은 생각보다 많다. 예를 들어, 네이버 홈페이지에 접속 후 1시간 뒤에 네이버에 다시 접속한다고 할 때, 같은 질의 메시지를 발생시키는 것은 트래픽 낭비라고 볼 수 있다. 따라서 한번 요청된 질의는 TTL에 저장된 값을 초 단위로 캐싱해둔다. 즉, 응답 영역의 TTL에 86400라는 값이 저장되어 있다면 응답 받은 시점으로부터 하루(86400초)동안 캐싱하여 동일한 질의에 대해 신속히 처리한다. 캐싱은 올바른 질의(Positive Caching)와 잘못된 질의(Negative Caching) 모두에 대해서 이뤄진다.*
+<span class="footnote">* 캐싱된 데이터를 삭제하고 싶다면 Windows에서는 ipconfig /flushdns를 Unix에서는 sudo killall -HUP mDNSResponder를 입력하면 된다.</span>
+
+## 1-4. 프로토콜 스택에 메시지 송신을 의뢰한다.
+- 세션
+세션(Session)이라는 것은 네트워크 상에서 종단 간 일회용 논리적 연결을 의미하며, 서로 데이터를 주고 받기 위한 가상의 파이프라고 보면 된다. 연결은 시간에 따라 상태가 변화하는데 아래와 같다. 점선은 서버의 변화를 나타내며, 실선은 클라이언트의 변화를 나타낸다.
+
+  - 연결 설정
+  연결 설정 과정부터 살펴보자. 연결 설정은 양단 프로세스 간에 데이터를 동기화하는 과정이다. 동기화 되는 데이터는 소켓 주소, 시작 순서 번호(ISN; Initial Sequence Number), 수신 윈도우 크기*다. 3번의 단계를 거쳐서 설정이 완료되기에 3-way 핸드셰이크(3-way Handshake)라고 부른다.
+
+  - 연결 해제
+  연결 해제도 설정과 비슷하게 3-4단계(3-way Handshake / 4-way Handshake)를 거쳐서 이뤄진다. 이를 깔끔한 종료(Graceful Close / Graceful Shutdown)라고 한다.* 클라이언트가 마지막 ACK 세그먼트를 보낸 후 일정 시간** 동안 연결을 열어두는데, 이는 마지막 ACK 세그먼트가 유실될 시 재전송하는 목적도 있으며, 뒤늦게 도착한 패킷을 폐기하려는 목적도 있다.
+  <span class="footnote"> * 강제 종료(Hard Close / Abortive Close)도 있다.
+  ** 일반적으로 30초며, 이에 사용되는 타이머를 시간 대기 타이머(Time-waited Timer)라 한다.
+  </span>
+
+- 에코 서버 제작하기
+  - 디스크립터
+  - 포트 번호
+  - 송신 버퍼 수신 버퍼
+
+- HTTP 1.1
+  - Keep-Alive
+  <!-- 마지막 참고자료 토대로 정리 -->
+
 
 # 참고자료
 - https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Identifying_resources_on_the_Web#syntax_of_uniform_resource_identifiers_uris
@@ -192,3 +264,26 @@ void PrintDomain(const struct addrinfo* addresses)
 - http://www.ktword.co.kr/test/view/view.php?nav=2&no=1144&sh=CIDR
 - https://opentutorials.org/course/3276
 - http://www.ktword.co.kr/test/view/view.php?m_temp1=385&id=433
+
+- https://youtu.be/Epu3m_9zp8M
+- https://youtu.be/XXzxetbAIfA
+- https://opentutorials.org/course/3276
+- http://www.ktword.co.kr/test/view/view.php?nav=2&no=264
+- http://www.ktword.co.kr/test/view/view.php?m_temp1=385&id=433
+- http://www.ktword.co.kr/test/view/view.php?m_temp1=2017&id=433
+- http://www.ktword.co.kr/test/view/view.php?m_temp1=2251&id=434
+- http://www.ktword.co.kr/test/view/view.php?m_temp1=3042&id=434
+- http://www.ktword.co.kr/test/view/view.php?m_temp1=2110&id=434
+- http://www.ktword.co.kr/test/view/view.php?m_temp1=2918&id=434
+- http://www.ktword.co.kr/test/view/view.php?m_temp1=2705&id=1230
+- https://www.cloudflare.com/ko-kr/learning/dns/dns-records/dns-a-record/
+- https://www.lesstif.com/system-admin/nslookup-20775988.html
+- https://www.cloudflare.com/ko-kr/learning/dns/dns-records/dns-cname-record/
+- https://www.cloudflare.com/ko-kr/learning/dns/dns-records/dns-mx-record/
+
+- https://youtu.be/6fd6wdMVXmQ
+- https://youtu.be/K9L9YZhEjC0
+- https://youtu.be/0ZXIRuEVa5E
+- https://sunyzero.tistory.com/269
+- https://www.geeksforgeeks.org/socket-programming-cc/
+- https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Evolution_of_HTTP#http1.1_–_the_standardized_protocol
