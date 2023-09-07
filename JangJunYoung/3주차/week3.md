@@ -1,6 +1,7 @@
 ### 프로토콜 스택의 내부 구성
 
-![Alt text](Untitled.png)
+![Untitled](https://github.com/johnny19991006/1-percent-network/assets/79901434/c8e82d3f-ad52-4718-88e1-d1e1d29c53ec)
+
 
 프로토콜 스택의 윗부분에는 데이터 송·수신을 담당하는TCP와 UDP가 있다.(UDP는 다음주차에 나와있기에 자세히 다룰 예정이다.)
 
@@ -14,11 +15,14 @@ IP아래에 있는 LAN드라이버는 LAN 어댑터의 하드웨어를 제어한
 
 마지막으로 LAN어댑터가 실제 송·수신 동작, 즉 케이블에 대해 신호를 송·수신하는 동작을 실행한다.
 
-![Alt text](<Untitled 1.png>)
+![Untitled 2](https://github.com/johnny19991006/1-percent-network/assets/79901434/080ff8fb-f2e0-4e3e-9197-d944f5f5878c)
+
 
 Cisco의 packetTracer를 이용한 LAN 구축.
 
-![Alt text](<Untitled 2.png>)
+![Untitled 2](https://github.com/johnny19991006/1-percent-network/assets/79901434/4d6a97fc-970d-471d-9a3e-9f713714ba6e)
+
+
 Cisco의 packetTracer를 이용한 WAN구축
 
 ### 소켓의  통신 제어 정보
@@ -37,7 +41,8 @@ Cisco의 packetTracer를 이용한 WAN구축
 
 ### TCP헤더 구조의 제어정보
 
-![Alt text](<Untitled 3.png>)
+![Untitled 3](https://github.com/johnny19991006/1-percent-network/assets/79901434/ddfb66fb-4bb6-4e72-9628-cb947c94c7c4)
+
 
 - 시퀀스 번호:보내는 데이터에 순서를 붙이기 위한 번호 필드
 - 승인번호: 받은 데이터의 어디까지 받을 수 있는지 바이트 위치를 나타내는 필드
@@ -62,7 +67,8 @@ Cisco의 packetTracer를 이용한 WAN구축
 
 피킷크기에 대한 용어로
 
-![Alt text](<Untitled 4.png>)
+![Untitled 4](https://github.com/johnny19991006/1-percent-network/assets/79901434/91c10e20-d4d9-4a57-b883-46cdfc662d1c)
+
 MTU:패킷 한개로 운반 할수 있는 디지털 데이터의 최대길이, 이더넷 기준으로 1500바이트이다.
 
 MSS:헤더를 제외하고 한개의 패킷으로 운반할 수 있는 TCP데이터의 최대길이
@@ -79,7 +85,8 @@ MSS:헤더를 제외하고 한개의 패킷으로 운반할 수 있는 TCP데이
 
 ### 3-Way Handshake
 
-![Alt text](<Untitled 5.png>)
+![Untitled 5](https://github.com/johnny19991006/1-percent-network/assets/79901434/133ae142-fa25-4e86-81be-b510bfcff361)
+
 
 3-way handshake란?
 
@@ -107,7 +114,8 @@ A프로세스가 (Client)가 B 프로세스(Server)에 연결을 요청
 
 ### 4-way handshaking(연결 해제 과정)
 
-![Alt text](<Untitled 6.png>)
+![Untitled 6](https://github.com/johnny19991006/1-percent-network/assets/79901434/b5473441-26b5-45ed-a965-98e83a0fd614)
+
 
 4 way handshake란?
 
@@ -133,7 +141,8 @@ RDT는 신뢰성 있는 데이터 교환을 의미한다. 즉 송수신하는 �
 
 아래는 RDT 프로토콜을 이용해 데이터를 송/수신 하는 예시이다.
 
-![Alt text](<Untitled 7.png>)
+<img width="620" alt="Untitled 7" src="https://github.com/johnny19991006/1-percent-network/assets/79901434/9c2439c3-2dd9-4a12-8a1a-d2f2a6c5a4ac">
+
 
 송신측
 
@@ -147,19 +156,22 @@ RDT는 신뢰성 있는 데이터 교환을 의미한다. 즉 송수신하는 �
 
 ### FSM(Finite State Machines-유한 상태 기계)
 
-![Alt text](<Untitled 8.png>)
+<img width="609" alt="Untitled 8" src="https://github.com/johnny19991006/1-percent-network/assets/79901434/71891338-4bad-4fb8-a636-dadad12b8146">
+
 
 FSM이란 유한개의 상태(state)가 존재할 때, 어떠한 상태(state)가 어떠한 사건(event)에 의해 다른 상태(state)로 변하는 전이(transition)가 발생하는 것을 도식화한 모델이다.
 
 즉 event는 상태를 변화시키는 원인이고, actions는 상태가 변화할 때 취하는 행동을 말한다.
 
-![Alt text](<Untitled 9.png>)
+<img width="623" alt="Untitled 9" src="https://github.com/johnny19991006/1-percent-network/assets/79901434/f1e48f10-8af8-4e22-8a83-a1077b51a16e">
+
 
 예를 들어 배고픔이란 상태(state)에서 식사(event)를 하는데 이때 초밥을 먹는다면(actions)배부름이라는 상태(state)로 전이(transition)된다.
 
 ### rdt 1.0(reliable transfer over a reliable channel)
 
-![Alt text](<Untitled 10.png>)
+<img width="610" alt="Untitled 10" src="https://github.com/johnny19991006/1-percent-network/assets/79901434/bf2b15ee-f1d7-429c-b58a-81c818052b11">
+
 
 rdt1.0은 완전히 안정적이라고 생각한다. 즉 bit error나 packet loss등이 전혀 없다고 가정한다.
 
@@ -179,17 +191,20 @@ rdt1.0은 완전히 안정적이라고 생각한다. 즉 bit error나 packet los
 
 ### rdt2.0(channel with errors)
 
-![Alt text](<Untitled 11.png>)
+<img width="610" alt="Untitled 11" src="https://github.com/johnny19991006/1-percent-network/assets/79901434/1326f4e5-64fe-42bd-a311-8f19c216b920">
+
 
 rdt1.0과 다른점은 rdt2.0에서는 bit error가 발생할 수 있다고 가정한다는 점이다. 따라서 이때 에러처리를 위해 ACKs 와 NAKs를 사용한다.
 
-![Alt text](<Untitled 12.png>)
+<img width="599" alt="Untitled 12" src="https://github.com/johnny19991006/1-percent-network/assets/79901434/443fc4ee-b94a-465f-9999-b99897822afa">
+
 
 rdt2.0에서는 에러가 없는 경우와 에러가 있는 경우 두가지를 나누어 설명하겠다.
 
 ### rdt2.0:operation with no errors(에러가 없는 경우)
 
-![Alt text](<Untitled 13.png>)
+<img width="822" alt="Untitled 13" src="https://github.com/johnny19991006/1-percent-network/assets/79901434/7e74d5cc-5d9c-4abf-9bc7-662a9f7fd9d9">
+
 
 (송신측 )상위 레이어에서 데이터를 받아온다
 
@@ -203,7 +218,8 @@ rdt2.0에서는 에러가 없는 경우와 에러가 있는 경우 두가지를 
 
 ### rdt2.0:operation with errors(에러가 있는 경우)
 
-![Alt text](<Untitled 14.png>)
+<img width="622" alt="Untitled 14" src="https://github.com/johnny19991006/1-percent-network/assets/79901434/fac0024d-a0e0-4bbc-bc05-d73e50eea688">
+
 
 상위 레이어에서 데이터를 받아온다
 
@@ -239,7 +255,8 @@ ACK/NAK 신호에 오류가 발생하거나 손실될 수 있다.
 
 rdt2.1은 패킷에 seq#(순서번호)을 추가해 rdt2.0의 문제점을 해결한다.
 
-![Alt text](<Untitled 15.png>)
+<img width="581" alt="Untitled 15" src="https://github.com/johnny19991006/1-percent-network/assets/79901434/7f50aefe-13de-42c3-a085-762d241a1e58">
+
 
 위 그림은 rdt2.1의 송신측의 FSM이다. 복잡해 보이지만 천천히 뜯어보면 간단하다.
 
@@ -250,7 +267,8 @@ rdt2.1은 패킷에 seq#(순서번호)을 추가해 rdt2.0의 문제점을 해�
 
 따라서 순서번호는 0과1이면 충분하다. 순서번호는 패킷의 중복재전송을 막기위해 부여하는 것이므로 중복인지 아닌지 판단하는 데에는 0과1이면 충분하기 때문이다.
 
-![Alt text](<Untitled 16.png>)
+<img width="612" alt="Untitled 16" src="https://github.com/johnny19991006/1-percent-network/assets/79901434/2756df25-809d-48f1-af53-f82e937810ac">
+
 
 위 그림은 rdt2.1의 수신측의 FSM이다. 마찬가지로 복잡해 보이지만 간단히 정리하자면 다음과 같다.
 
@@ -263,7 +281,8 @@ rdt2.1은 패킷에 seq#(순서번호)을 추가해 rdt2.0의 문제점을 해�
 
 rdt2.2는 rdt2.1과 같은 기능을 가진다. 다른점은 rdt2.2는 NAK대신 ACK만 사용한다는 점이다.
 
-![Alt text](<Untitled 17.png>)
+<img width="548" alt="Untitled 17" src="https://github.com/johnny19991006/1-percent-network/assets/79901434/29df53d7-2597-49bf-a1ee-5a68d2d9b320">
+
 
 위 그림은 rdt2.2의 FSM이다. 마찬가지로 복잡해보이지만 간단히 정리하면 다음과 같다.
 
@@ -278,11 +297,13 @@ rdt2.0/2.1/2.2는 패킷 에러에는 대응할 수 있으나 아직 큰 결함�
 
 따라서 rdt3.0은 다음과 같은 방법을 사용한다.
 
-![Alt text](<Untitled 18.png>)
+<img width="593" alt="Untitled 18" src="https://github.com/johnny19991006/1-percent-network/assets/79901434/cb8cdfbf-ae38-4168-adab-494bba96ad56">
+
 
 rdt의 데이터 전송과정을 살펴보자.
 
-![Alt text](<Untitled 19.png>)
+<img width="591" alt="Untitled 19" src="https://github.com/johnny19991006/1-percent-network/assets/79901434/8d6335be-6cc4-48af-9563-bf7935bff1fb">
+
 
 (a)는 패킷이 손실되지 않고 정상적으로 전달됐을때의 과정이다
 
@@ -317,13 +338,15 @@ rdt3.0의 가장 큰 문제점이다. ACK신호가 지연된다면 위와같은 
 
 ### pipelined protocols
 
-![Alt text](<Untitled 20.png>)
+<img width="576" alt="Untitled 20" src="https://github.com/johnny19991006/1-percent-network/assets/79901434/d0b85cc1-10e7-4d19-855a-4ed9e1fcba08">
+
 
 pipelined protocols 에서 pipelining은 송신자가 다수의 패킷을 한번에 보내는 것을 말한다. 즉 ACK신호를 받을때까지 기다리다 ACK신호를 받고 나서 다음 데이터를 보내는 stop and wait 방식과 다르게 송신자가 ACK신호를 받지 않아도 패킷 여러개를 보내는 방식이다. 송신자와 수신자가 버퍼를 가져야 하며, 대표적인 두가지 프로토콜로 Go-back-N과 Selective Repeat이 있다.
 
 ### GO-Back-N(GBN)
 
-![Alt text](<Untitled 21.png>)
+<img width="625" alt="Untitled 21" src="https://github.com/johnny19991006/1-percent-network/assets/79901434/3084bbc0-1298-4139-bfe7-4bf935a66610">
+
 
 - Go-Back-N방식은 송신측에서 전송할 패킷의 개수를 정한다.
 - 버퍼에 그 개수만큼의 패킷을 저장하여 전송한다.
@@ -335,7 +358,8 @@ pipelined protocols 에서 pipelining은 송신자가 다수의 패킷을 한번
 
 이해가 쉽지 않다면 다음과 같이 동작하는 예시를 보면 이해가 빠르다.
 
-![Alt text](<Untitled 22.png>)
+<img width="610" alt="Untitled 22" src="https://github.com/johnny19991006/1-percent-network/assets/79901434/1e8b259c-f162-4ad8-9cb9-edf26f89c004">
+
 
 - window size가 4인 상황에서 GBN의 동작이다. 가장 먼저 패킷0,1,2,3을 전송한다. 전송도중에 패킷2가 손실되었다.
 - 수신측은 패킷0과1을 잘 받았으므로 ACK0,1을 보내고 패킷2가 오기를 기다린다.
@@ -350,7 +374,8 @@ pipelined protocols 에서 pipelining은 송신자가 다수의 패킷을 한번
 
 ### Selective Repeat(SR)
 
-![Alt text](<Untitled 23.png>)
+<img width="616" alt="Untitled 23" src="https://github.com/johnny19991006/1-percent-network/assets/79901434/b115cfb4-f5de-4abb-b091-17e4e93db065">
+
 
 - GBN의 비효율성을 해결하기 위한 방식이다.
 - 송신측은 각 패킷마다 timer를 설정하고 timeout된 패킷만 재전송한다.(GBN처럼 버퍼모두를 전송하지 않음)
@@ -362,7 +387,8 @@ pipelined protocols 에서 pipelining은 송신자가 다수의 패킷을 한번
 
 마찬가지로 예시를 들어보자
 
-![Alt text](<Untitled 24.png>)
+<img width="602" alt="Untitled 24" src="https://github.com/johnny19991006/1-percent-network/assets/79901434/65970e9c-e47c-431b-9dee-d4f6c4765ddb">
+
 
 - window size가 4인 상황에서 SR의 동작이다. 가장 먼저 패킷 0,1,2,3, 을 보낸다. 전송도중 패킷2가 손실되었다.
 - 수신측은 패킷0과1을 잘 받았으므로 ACK0,1을 보내고 패킷 0과 1을 상위계층에 전달한 다음 패킷2가 오기를 기다린다.
@@ -379,11 +405,13 @@ pipelined protocols 에서 pipelining은 송신자가 다수의 패킷을 한번
 
 sr은 GBN에 비해 매우 효율적으로 보인다. 하지만 SR은 큰 딜레마를 가지고 있다.
 
-![Alt text](<Untitled 25.png>)
+<img width="583" alt="Untitled 25" src="https://github.com/johnny19991006/1-percent-network/assets/79901434/2031846c-d3da-4f2d-a4d1-ec75cc8f7c3f">
+
 
 우선 window size가 3이고 sequence number는 0,1,2,3이라고 하자. 또한 수신측과 송신 측이 서로를 볼 수 없다고 가정하자. 위의 SR동작에서 보이진 않았지만, 수신측도 기다리던 패킷을 받으면 window에서 rcv_base를 옆으로 한칸씩 밀게 된다. 즉, 위 그림과 같은 상황에서는 아무 문제가 발생하지 않는다.
 
-![Alt text](<Untitled 26.png>)
+<img width="561" alt="Untitled 26" src="https://github.com/johnny19991006/1-percent-network/assets/79901434/7ae3c045-ffbc-4e03-adbe-d0f4fb3affe6">
+
 
 하지만 위와 같이 ACK 0,1,2가 모두 손실된다면 문제가 발생한다.
 
@@ -403,7 +431,8 @@ SR은 window size가 sequence number의 개수의 절반보다 이하여야 한�
 
 window size ≤(sequence number)
 
-![Alt text](<Untitled 27.png>)
+<img width="552" alt="Untitled 27" src="https://github.com/johnny19991006/1-percent-network/assets/79901434/6dd82b3a-9f0d-42c2-9d53-b605890db06e">
+
 
 예를 들어 위와 같은 상황에서는 window size를 2로 줄이면 문제가 해결된다.
 
@@ -453,7 +482,8 @@ window size ≤(sequence number)
 
 송신자는 처음에 하나의 패킷을 전송한다. 전송된 패킷이 문제없이 도착하는 것을 확인하면 **윈도우 사이즈를 하나 증가**시켜 두개를 보낸다. 이러한 식으로 하나씩 윈도우 사이즈를 늘려가다 패킷이 전송되지 않거나 TIME_OUT 이 발생하면 늘려놨던 윈도우 사이즈를 절반으로 줄인다.
 
-![Alt text](<Untitled 28.png>)
+![Untitled 28](https://github.com/johnny19991006/1-percent-network/assets/79901434/43d769f8-9019-4ed1-9c6e-729788f3a315)
+
 
 이 단순한 AIMD알고리즘은 결국 모든 호스트가 공평하게 네트워크를 사용하게 하는데, 왜그럴까?
 
@@ -487,7 +517,8 @@ Slow Start 방식은 윈도우 사이즈를 1개씩 늘려가던 AIMD방식과 �
 
 Tahoe정책은 혼잡제어의 초기정책이고 빠른재전송이 처음으로 도입된 정책이라고 한다.
 
-![Alt text](<Untitled 29.png>)
+![Untitled 29](https://github.com/johnny19991006/1-percent-network/assets/79901434/9034dfd5-2969-4f84-a8f3-f7fa9399a7ea)
+
 
 처음에는 동일하게 slow start 방식으로 윈도우를 증가시키다가 ssthresh시점 이후부터는 AIMD방식을 사용한다.
 
@@ -497,7 +528,8 @@ Tahoe정책은 혼잡제어의 초기정책이고 빠른재전송이 처음으�
 
 ### TCP Reno
 
-![Alt text](<Untitled 30.png>)
+![Untitled 30](https://github.com/johnny19991006/1-percent-network/assets/79901434/15898f4e-2e11-4efd-8c59-68742a1ace31)
+
 
 TCP Tahoe정책과 동일하지만 차이점은 바로 3 Ack Duplicated 와 TimeOut을 구분해 대응한다는 점이다.
 
@@ -536,7 +568,8 @@ from Client>BCSD
 
 위와 같이 클라이언트가 전송하는 데이터를 그대로 돌려받은 것을 확인 할 수 있다.
 
-![Alt text](<Untitled 31.png>)
+![Untitled 31](https://github.com/johnny19991006/1-percent-network/assets/79901434/41bfd27f-18b1-438b-8490-d1fafad993eb)
+
 
 출처:
 
