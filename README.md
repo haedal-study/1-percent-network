@@ -9,7 +9,7 @@
       <td align="center" valign="top" width="14.28%"><img src="https://avatars.githubusercontent.com/u/21010656?v=4" width="100px;"/><br /><sub><a href="https://github.com/songsunkook"><b>songsunkook</b></a></sub><br /></td>
       <td align="center" valign="top" width="14.28%"><img src="https://avatars.githubusercontent.com/u/50792467?v=4" width="100px;"/><br /><sub><a href="https://github.com/daepan"><b>daepan</b></a></sub><br /></td>
       <td align="center" valign="top" width="14.28%"><img src="https://avatars.githubusercontent.com/u/71889359?v=4" width="100px;"/><br /><sub><a href="https://github.com/Invidam"><b>Invidam</b></a></sub><br /></td>
-      <td align="center" valign="top" width="14.28%"><img src="https://avatars.githubusercontent.com/u/72890183?v=4" width="100px;"/><br /><sub><a href="https://github.com/password-kim"><b>password-kim</b></a></sub><br /></td>
+      <td align="center" valign="top" width="14.28%"><img src="https://avatars.githubusercontent.com/u/72890183?v=4" width="100px;"/><br /><sub><a href="https://github.com/password-kim"><del>password-kim</del> <br />중도 하차</a></sub><br /></td>
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><img src="https://avatars.githubusercontent.com/u/74540646?v=4" width="100px;"/><br /><sub><a href="https://github.com/dooohun"><b>dooohun</b></a></sub><br /></td>
