@@ -141,7 +141,7 @@
     - 이를 **네이글 알고리즘**(Nagle Algorithm)이라 한다.
 - 한 번에 전송할 수 있는 패킷의 크기를 **MTU**(Maximum Transmission Unit)이라 하며, MTU에서 IP 헤더와 TCP 헤더를 뺀 최대 페이로드 크기를 **MSS**(Maximum Segment Size)라 한다.
 
-![MTU와 MSS](.resource/2-3.png)
+![MTU와 MSS](.resources/2-3.png)
 <div class="img-desc">MTU와 MSS</div>
 
 ### 2. 데이터가 클 때는 분할하여 보낸다.
