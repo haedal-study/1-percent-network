@@ -221,8 +221,8 @@
 
 ## 2-5. IP와 이더넷의 패킷 송∙수신 동작
 ### 1. 패킷의 기본
-- 패킷(Packet)은 헤더와 데이터로 구성된다.
-    - 헤더는 제어 정보가 기록되어 있으며 프로토콜이 동작하기 위한 데이터다.
+- **패킷**(Packet)은 헤더와 데이터로 구성된다.
+    - 헤더는 <span class="highlight">제어 정보</span>가 기록되어 있으며 프로토콜이 동작하기 위한 데이터다.
 - 패킷은 `라우터(Router)`와 `허브(Hub)` 등 여러 중계 장치를 거쳐 목적지로 도달된다.
 ![패킷의 전송 그림](.resources/2-9.png)
 <div class="img-desc">패킷을 수신한 중계 장치는 헤더에 있는 정보를 활용해 다음 장치로 패킷을 전송한다.</div>
@@ -231,7 +231,7 @@
 <div class="img-desc">이런 식으로 여러 장치를 거쳐 목적지에 패킷이 도달하게 된다.</div>
 
 ### 2. 패킷 송∙수신 동작의 개요
-- IP가 패킷을 송신할 때는 상위 계층으로부터 전달된 데이터가 무엇이든지 MAC 헤더와 IP 헤더를 부착해 송신한다.
+- IP가 패킷을 송신할 때는 <span class="highlight">상위 계층으로부터 전달된 데이터가 무엇이든지 MAC 헤더와 IP 헤더를 부착해 송신</span>한다.
 
 ### 3. 수신처 IP 주소를 기록한 IP 헤더를 만든다.
 <pre class="center">
@@ -279,9 +279,9 @@
 <div class="img-desc"> Windows에서 라우팅 테이블을 확인한 결과</div>
 
 ### 4. 이더넷용 MAC 헤더를 만든다.
-- MAC(Media Access Control) 주소란?
-    - NIC(Network Interface Card)에 부여된 물리적인 네트워크 주소
-    - 전 세계에서 중복되지 않게 부여된다.
+- **MAC**(Media Access Control) 주소란?
+    - <span class="highlight">NIC(Network Interface Card)에 부여된 물리적인 네트워크 주소</span>
+    - 전 세계에서 <span class="highlight">중복되지 않게</span> 부여된다.
     - [IEEE](https://www.ieee.org/)가 관리한다.
 - IP 주소와 MAC 주소의 차이
     - IP 주소는 인터넷에서 호스트를 식별하기 위한 논리적인 주소다. 그래서 각 호스트에 할당된 IP 주소는 시시각각 변할 수 있다. (Ex. WiFi를 이용하다가 LTE에 접속하는 경우 등)
@@ -317,11 +317,14 @@
 <div class="img-desc">MAC 헤더 필드의 의미</div>
 
 ### 5. ARP로 수신처 라우터의 MAC 주소를 조사한다.
-- 수신지 IP 주소로 가기 위한 다음 경유지의 MAC 주소를 모를 경우 ARP(Address Resolution Protocol)을 사용해 MAC 주소를 얻는다.
+- 수신지 IP 주소로 가기 위한 다음 경유지의 MAC 주소를 모를 경우 **ARP**(Address Resolution Protocol)을 사용해 MAC 주소를 얻는다.
 - ARP의 동작
-    1. ARP 요청 패킷을 이더넷으로 브로드캐스트한다. 브로드캐스트된 패킷은 서브넷 외부로 나가지 않는다.
+    1. ARP 요청 패킷을 이더넷으로 브로드캐스트한다. 브로드캐스트된 패킷은 외부 망으로 나가지 않는다.
     2. ARP 요청을 받은 호스트 중 해당되는 호스트만 ARP 응답을 한다. 그 외의 호스트는 폐기한다.
-        2-1. 만일 외부 네트워크에 속하는 호스트인 경우 게이트웨이가 응답한다.
+        2-1. 만일 외부 네트워크에 속하는 호스트인 경우 게이트웨이(Gateway)*가 응답한다.
+
+<span class="footnote">* 라우터다.</span>
+
 ![ARP의 동작](.resources/2-7.png)
 <div class="img-desc">ARP도 HTTP나 DNS처럼 요청과 응답의 과정으로 구성된다. ARP 요청은 내부망에서만 일어난다.</div>
 
@@ -334,7 +337,7 @@
 <div class="img-desc">Windows에서의 ARP 테이블</div>
 
 ### 6. 이더넷의 기본
-- 이더넷(Ethernet)
+- **이더넷**(Ethernet)
     - 다수의 컴퓨터가 여러 상대와 자유롭게 적은 비용으로 통신하기 위해 고안된 통신 기술이다.
     - MAC 헤더를 이용해 원하는 상대에게 신호를 송신한다.
     - 초기에는 공유 매체를 사용했으나 현재는 전용매체 전이중방식으로 원하는 상대하고만 양방향 통신한다.
@@ -344,17 +347,18 @@
 
 ### 7. IP 패킷을 전기나 빛의 신호로 변환하여 송신한다.
 - LAN 어댑터가 프레임을 전기, 빛 등의 신호로 변환하여 송신한다.
-    - 프레임(Frame)이란 데이터 링크 계층에서의 PDU(Protocol Data Unit)이다.
+    - **프레임**(Frame)이란 데이터 링크 계층에서의 **PDU**(Protocol Data Unit)이다.
 - LAN 어댑터는 입출력장치기 때문에 드라이버가 필요하다.
     - LAN 어댑터에 전원이 공급되면 드라이버가 초기화한다. 이때, LAN 어댑터에 MAC 주소가 설정된다.
+
 ![LAN 어댑터의 구조](.resources/2-12.png)
 <div class="img-desc">LAN 어댑터의 구조</div>
 
 ### 8. 패킷에 3개의 제어용 데이터를 추가한다.
-- MAC 회로가 프리앰블(Preamble)과 스타트 프레임 딜리미터(SFD; Start Frame Delimeter)를 패킷의 맨 앞에(Header), 프레임 체크 시퀀스(FCS; Frame Check Sequence)를 맨 뒤에(Trailer) 부착한다.
-    - 프리앰블은 패킷 수신 시 타이밍을 잡기 위한 것이다.
-    - 스타트 프레임 딜리미터는 프레임의 시작 위치를 표시하기 위한 것이다.
-    - 프레임 체크 시퀀스는 프레임의 오류를 검출하기 위한 것이다.
+- MAC 회로가 **프리앰블**(Preamble)과 **스타트 프레임 딜리미터**(SFD; Start Frame Delimeter)를 패킷의 맨 앞에(Header), **프레임 체크 시퀀스**(FCS; Frame Check Sequence)를 맨 뒤에(Trailer) 부착한다.
+    - 프리앰블은 <span class="highlight">패킷 수신 시 타이밍을 잡기 위한 것</span>이다.
+    - 스타트 프레임 딜리미터는 <span class="highlight">프레임의 시작 위치</span>를 표시하기 위한 것이다.
+    - 프레임 체크 시퀀스는 <span class="highlight">프레임의 오류를 검출하기 위한 것</span>이다.
 
 ![프리앰블과 스타트 프레임 딜리미터](.resources/2-14.png)
 <div class="img-desc">프리앰블과 스타트 프레임 딜리미터</div>
@@ -398,7 +402,7 @@
 - 수신 과정
     1. LAN 어댑터가 패킷을 TCP/IP 프로토콜 스택에 건넨다.
     2. IP가 헤더를 조사해 오류가 없는지 확인한다. 만약 수신지 IP 주소가 자신이 아닌 경우 ICMP로 송신자에게 오류를 통지한다.
-    3. 단편화가 일어났을 경우 리어셈블링(Reassembling)하여 TCP에 건넨다.
+    3. 단편화가 일어났을 경우 **리어셈블링**(Reassembling)하여 TCP에 건넨다.
     4. TCP가 헤더를 조사해 오류가 없는지 확인하고, 대응되는 소켓을 찾아 적절한 동작을 실행한다.
 
 - ICMP 메시지 종류
@@ -415,8 +419,8 @@
 <div class="img-desc"> 주요 ICMP 메시지</div>
 
 ## 2-6. UDP 프로토콜을 이용한 송∙수신 동작
-- UDP(User Datagram Protocol)
-    - TCP는 신뢰성이 있지만 UDP는 단순히 전송만 한다.
+- **UDP**(User Datagram Protocol)
+    - <span class="highlight">TCP는 신뢰성이 있지만 UDP는 단순히 전송만 한다.</span>
     - UDP를 사용하는 프로토콜의 종류
         - DNS, NTP, DHCP, RIP 등
 - UDP 헤더는 아래와 같다.
