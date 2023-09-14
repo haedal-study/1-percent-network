@@ -219,6 +219,237 @@
         - 바로 소켓을 닫아버리면 해당 포트 번호를 다른 소켓이 점유할 수도 있으며 이는 오동작을 일으킬 수 있다.
 - 이때 사용되는 타이머를 **대기 시간 타이머**(Time-waited Timer)라고 한다.
 
+## 2-5. IP와 이더넷의 패킷 송∙수신 동작
+### 1. 패킷의 기본
+- 패킷(Packet)은 헤더와 데이터로 구성된다.
+    - 헤더는 제어 정보가 기록되어 있으며 프로토콜이 동작하기 위한 데이터다.
+- 패킷은 `라우터(Router)`와 `허브(Hub)` 등 여러 중계 장치를 거쳐 목적지로 도달된다.
+![패킷의 전송 그림](.resources/2-9.png)
+<div class="img-desc">패킷을 수신한 중계 장치는 헤더에 있는 정보를 활용해 다음 장치로 패킷을 전송한다.</div>
+
+![네트워크 예시](.resources/2-16.png)
+<div class="img-desc">이런 식으로 여러 장치를 거쳐 목적지에 패킷이 도달하게 된다.</div>
+
+### 2. 패킷 송∙수신 동작의 개요
+- IP가 패킷을 송신할 때는 상위 계층으로부터 전달된 데이터가 무엇이든지 MAC 헤더와 IP 헤더를 부착해 송신한다.
+
+### 3. 수신처 IP 주소를 기록한 IP 헤더를 만든다.
+<pre class="center">
+0                   1                   2                   3
+0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|Version|  IHL  |Type of Service|          Total Length         |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|         Identification        |Flags|      Fragment Offset    |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|  Time to Live |    Protocol   |         Header Checksum       |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                       Source Address                          |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                    Destination Address                        |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                    Options                    |    Padding    |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</pre>
+<div class="img-desc">IP 헤더의 구조</div>
+
+| 필드 명칭 | 설명 |
+| --- | --- |
+| Version | IP의 버전으로 4가 입력된다. |
+| IHL | IP 헤더의 길이 |
+| ToS; Type of Service | [서비스 유형](http://www.ktword.co.kr/test/view/view.php?m_temp1=2051&id=425) |
+| Total Length | IP 패킷 전체의 길이를 바이트 단위로 표시한다. |
+| Identification | IP 패킷을 식별하는 번호로 단편화(Fragmentation)가 일어난 경우 송신지에서 다시 조립하기 위해 사용한다. |
+| Flags | [단편화 플래그](http://www.ktword.co.kr/test/view/view.php?m_temp1=5236&id=1003) |
+| Fragment Offset | 단편화 되기 전 위치를 나타낸다. |
+| Time to Live | 패킷이 경유할 수 있는 라우터의 개수(홉; hop)를 나타낸다. 이 값이 0이된 패킷은 라우터가 폐기한다. |
+| Protocol | 상위 계층의 프로토콜* |
+| Header Checksum | IP 헤더 체크섬**  |
+| Source Address | 송신지 IP 주소 |
+| Destination Address | 수신지 IP 주소 |
+
+<span class="footnote"> * 프로토콜 번호는 [여기](https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml)를 참고하라. </span>
+<span class="footnote"> ** IPv6부터는 상위 계층에서 오류를 검출하면 된다고 생각해 체크섬이 사라졌다. </span>
+<div class="img-desc">IP 헤더 필드의 의미</div>
+
+![MacOS 라우팅 테이블](.resources/2-5.png)
+<div class="img-desc"> MacOS에서 라우팅 테이블을 확인한 결과</div>
+
+![Windows 라우팅 테이블](.resources/2-6.png)
+<div class="img-desc"> Windows에서 라우팅 테이블을 확인한 결과</div>
+
+### 4. 이더넷용 MAC 헤더를 만든다.
+- MAC(Media Access Control) 주소란?
+    - NIC(Network Interface Card)에 부여된 물리적인 네트워크 주소
+    - 전 세계에서 중복되지 않게 부여된다.
+    - [IEEE](https://www.ieee.org/)가 관리한다.
+- IP 주소와 MAC 주소의 차이
+    - IP 주소는 인터넷에서 호스트를 식별하기 위한 논리적인 주소다. 그래서 각 호스트에 할당된 IP 주소는 시시각각 변할 수 있다. (Ex. WiFi를 이용하다가 LTE에 접속하는 경우 등)
+    - 앞서 설명했듯 패킷은 여러 중계 장치를 거쳐서 전송한다. 즉, 목적지 IP 주소로 가기 위해서는 실제 물리적인 주소가 필요하다. 이것이 MAC 주소다.
+- MAC 헤더는 아래와 같다.
+<pre class="center">
+0                   1            
+0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6
++---------------+---------------+
+|                               |
+|             Source            |
+|          MAC Address          |
+|                               |
++---------------+---------------+
+|                               |
+|          Destination          |
+|          MAC Address          |
+|                               |
++---------------+---------------+
+|           EtherType           |
++---------------+---------------+
+</pre>
+<div class="img-desc">MAC 헤더의 구조</div>
+
+
+| 필드 명칭 | 설명 |
+| --- | --- |
+| Source MAC Address | 송신지 MAC 주소 |
+| Destination MAC Address | 수신지 MAC 주소 |
+| EtherType | 사용하는 프로토콜의 종류* |
+
+<span class="footnote">* 자세한 것은 [여기](http://www.ktword.co.kr/test/view/view.php?m_temp1=2039&id=852)를 참고하라. </span>
+<div class="img-desc">MAC 헤더 필드의 의미</div>
+
+### 5. ARP로 수신처 라우터의 MAC 주소를 조사한다.
+- 수신지 IP 주소로 가기 위한 다음 경유지의 MAC 주소를 모를 경우 ARP(Address Resolution Protocol)을 사용해 MAC 주소를 얻는다.
+- ARP의 동작
+    1. ARP 요청 패킷을 이더넷으로 브로드캐스트한다. 브로드캐스트된 패킷은 서브넷 외부로 나가지 않는다.
+    2. ARP 요청을 받은 호스트 중 해당되는 호스트만 ARP 응답을 한다. 그 외의 호스트는 폐기한다.
+        2-1. 만일 외부 네트워크에 속하는 호스트인 경우 게이트웨이가 응답한다.
+![ARP의 동작](.resources/2-7.png)
+<div class="img-desc">ARP도 HTTP나 DNS처럼 요청과 응답의 과정으로 구성된다. ARP 요청은 내부망에서만 일어난다.</div>
+
+- DNS 캐시처럼 ARP의 결과도 캐싱된다.
+
+![MacOS ARP 테이블](.resources/2-10.png)
+<div class="img-desc">MacOS에서의 ARP 테이블</div>
+
+![Windows ARP 테이블](.resources/2-8.png)
+<div class="img-desc">Windows에서의 ARP 테이블</div>
+
+### 6. 이더넷의 기본
+- 이더넷(Ethernet)
+    - 다수의 컴퓨터가 여러 상대와 자유롭게 적은 비용으로 통신하기 위해 고안된 통신 기술이다.
+    - MAC 헤더를 이용해 원하는 상대에게 신호를 송신한다.
+    - 초기에는 공유 매체를 사용했으나 현재는 전용매체 전이중방식으로 원하는 상대하고만 양방향 통신한다.
+
+![이더넷의 기본형](.resources/2-11.png)
+<div class="img-desc">이더넷의 기본형</div>
+
+### 7. IP 패킷을 전기나 빛의 신호로 변환하여 송신한다.
+- LAN 어댑터가 프레임을 전기, 빛 등의 신호로 변환하여 송신한다.
+    - 프레임(Frame)이란 데이터 링크 계층에서의 PDU(Protocol Data Unit)이다.
+- LAN 어댑터는 입출력장치기 때문에 드라이버가 필요하다.
+    - LAN 어댑터에 전원이 공급되면 드라이버가 초기화한다. 이때, LAN 어댑터에 MAC 주소가 설정된다.
+![LAN 어댑터의 구조](.resources/2-12.png)
+<div class="img-desc">LAN 어댑터의 구조</div>
+
+### 8. 패킷에 3개의 제어용 데이터를 추가한다.
+- MAC 회로가 프리앰블(Preamble)과 스타트 프레임 딜리미터(SFD; Start Frame Delimeter)를 패킷의 맨 앞에(Header), 프레임 체크 시퀀스(FCS; Frame Check Sequence)를 맨 뒤에(Trailer) 부착한다.
+    - 프리앰블은 패킷 수신 시 타이밍을 잡기 위한 것이다.
+    - 스타트 프레임 딜리미터는 프레임의 시작 위치를 표시하기 위한 것이다.
+    - 프레임 체크 시퀀스는 프레임의 오류를 검출하기 위한 것이다.
+
+![프리앰블과 스타트 프레임 딜리미터](.resources/2-14.png)
+<div class="img-desc">프리앰블과 스타트 프레임 딜리미터</div>
+
+- 송신할 때는 데이터 신호와 클록 신호를 합친 형태로 전송된다.
+    - 이를 합친 이유는...
+        - 1 혹은 0이 이어지면 신호의 변화가 없어 비트의 구분을 판단하지 못할 수 있기 때문이다.
+        - 케이블이 길어질 경우 신호선의 길이가 달라져 데이터 신호와 클록 신호가 전달되는 시간에 차이가 생겨 클록이 틀어질 수 있기 때문이다.
+
+![신호의 예시](.resources/2-15.png)
+<div class="img-desc">신호의 예시</div>
+
+- FCS로 오류를 검출할 때는 [순환중복검사](http://www.ktword.co.kr/test/view/view.php?nav=2&no=603&sh=CRC)(CRC; Cyclic Redendancy Check)를 이용한다.
+
+### 9. 허브를 향해 패킷을 송신한다.
+- 송신 과정
+    1. MAC 회로가 디지털 데이터를 전기 신호로 변환하여 PHY(MAU) 회로에 전달한다.
+    2. PHY(MAU) 회로가 전기 신호를 이더넷의 종류에 따라 변환한다.
+
+![100BASE-TX의 신호](.resources/2-13.png)
+<div class="img-desc">100BASE-TX의 사양으로 변환된 신호</div>
+
+- 리피터 허브와 같이 반이중 모드의 경우 PHY(MAU) 회로가 아무도 송신하고 있지 않을 때, 데이터를 내보내게 된다.
+    - 다만 우연히 충돌할 수 있는데 이때는 재밍 신호를 송신한 후, 잠시 대기했다가 다시 한 번 송신을 시도한다. 대기 시간은 MAC 주소를 바탕으로 생성된 난수에 따라 달라진다.
+    - 계속해서 충돌이 일어날 경우 대기 시간을 2배씩 늘리다가 열 번째까지 송신을 시도했는데도 해결되지 않으면 오류로 판단한다.
+
+### 10. 돌아온 패킷을 받는다.
+- 수신 과정
+    1. 프리앰블을 분석해 타이밍을 계산한다.
+    2. 스타트 프레임 딜리미터가 나오면 그 다음 비트부터 디지털 데이터로 변환한다.
+    3. PHY(MAU) 회로에서 신호를 공통 형식으로 변환하여 MAC 회로에 보낸다.
+    4. MAC 회로에서 신호를 차례대로 디지털 데이터로 변환하여 버퍼 메모리에 저장한다.
+    5. 신호의 마지막에 이르면 FCS를 검사해 오류가 발생했는지 검사한다. FCS의 값이 다른 경우 오류로 간주해 폐기한다.
+    6. 수신지 MAC 주소를 비교하여 자신의 패킷이 아닌 경우 폐기한다.
+        6-1. 만일 무차별 모드(Promiscuous Mode)라면 MAC 주소를 검사하지 않고 수신한다.
+    7. 패킷을 수신한 사실을 인터럽트로 통지한다.
+
+- 인터럽트에 관하여는 [여기](https://github.com/haedal-study/self-learning-comp-archi/blob/main/choiseonmun/3%EC%A3%BC%EC%B0%A8.pdf)를 참고하자.
+
+### 11. 서버의 응답 패킷을 IP에서 TCP로 넘긴다.
+- 수신 과정
+    1. LAN 어댑터가 패킷을 TCP/IP 프로토콜 스택에 건넨다.
+    2. IP가 헤더를 조사해 오류가 없는지 확인한다. 만약 수신지 IP 주소가 자신이 아닌 경우 ICMP로 송신자에게 오류를 통지한다.
+    3. 단편화가 일어났을 경우 리어셈블링(Reassembling)하여 TCP에 건넨다.
+    4. TCP가 헤더를 조사해 오류가 없는지 확인하고, 대응되는 소켓을 찾아 적절한 동작을 실행한다.
+
+- ICMP 메시지 종류
+
+| 메시지 종류 | 타입 | 설명 |
+| --- | --- | --- |
+| Echo Reply | 0 | Echo 메시지 응답 |
+| Destination Unreachable | 3 | 목적지에 도달하지 못하고 폐기된 경우 |
+| Source Quench | 4 | 라우터의 수신 버퍼가 가득차서 전달되지 못한 경우 |
+| Redirect | 5 | LAN에 다수의 라우터가 존재하는 경우 목적지로 가는 더 좋은 경로가 있음을 알려준다. |
+| Echo | 8 | Echo 메시지 요청 |
+| Time Exceeded | 11 | TTL이 만료된 경우 |
+| Parameter Problem | 12 | IP 헤더에 오류가 있는 경우 |
+<div class="img-desc"> 주요 ICMP 메시지</div>
+
+## 2-6. UDP 프로토콜을 이용한 송∙수신 동작
+- UDP(User Datagram Protocol)
+    - TCP는 신뢰성이 있지만 UDP는 단순히 전송만 한다.
+    - UDP를 사용하는 프로토콜의 종류
+        - DNS, NTP, DHCP, RIP 등
+- UDP 헤더는 아래와 같다.
+<pre class="center">
+0      7 8     15 16    23 24    31  
++--------+--------+--------+--------+
+|     Source      |   Destination   |
+|      Port       |      Port       |
++--------+--------+--------+--------+
+|                 |                 |
+|     Length      |    Checksum     |
++--------+--------+--------+--------+
+|                                    
+|          data octets ...           
++---------------- ...                
+</pre>
+<div class="img-desc">UDP 헤더의 구조</div>
+
+| 필드 명칭 | 설명 | 
+| --- | --- |
+| Source Port | 송신지 포트 번호 |
+| Destination Port | 수신지 포트 번호 |
+| Length | UDP 헤더와 페이로드를 합한 길이 |
+| Checksum | 체크섬 |
+<div class="img-desc">UDP 헤더 필드의 의미</div>
+
 # 참고자료
 - https://www.ietf.org/rfc/rfc793.txt
 - https://datatracker.ietf.org/doc/html/rfc9293
+- https://datatracker.ietf.org/doc/html/rfc768
+- https://datatracker.ietf.org/doc/html/rfc791
+- http://www.ktword.co.kr/test/view/view.php?m_temp1=1859
+- https://datatracker.ietf.org/doc/html/rfc826
+- https://en.wikipedia.org/wiki/MAC_address
+- http://www.ktword.co.kr/test/view/view.php?nav=2&no=388&sh=%EC%9D%B4%EB%8D%94%EB%84%B7
+- http://www.ktword.co.kr/test/view/view.php?m_temp1=2167&id=449
