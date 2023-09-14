@@ -12,7 +12,7 @@
       <td align="center" valign="top" width="14.28%"><img src="https://avatars.githubusercontent.com/u/72890183?v=4" width="100px;"/><br /><sub><a href="https://github.com/password-kim"><del>password-kim</del> <br />중도 하차</a></sub><br /></td>
     </tr>
     <tr>
-      <td align="center" valign="top" width="14.28%"><img src="https://avatars.githubusercontent.com/u/74540646?v=4" width="100px;"/><br /><sub><a href="https://github.com/dooohun"><b>dooohun</b></a></sub><br /></td>
+      <td align="center" valign="top" width="14.28%"><img src="https://avatars.githubusercontent.com/u/74540646?v=4" width="100px;"/><br /><sub><a href="https://github.com/dooohun"><b><del>dooohun</del> <br />중도 하차</b></a></sub><br /></td>
       <td align="center" valign="top" width="14.28%"><img src="https://avatars.githubusercontent.com/u/79901434?v=4" width="100px;"/><br /><sub><a href="https://github.com/johnny19991006"><b>johnny19991006</b></a></sub><br /></td>
       <td align="center" valign="top" width="14.28%"><img src="https://avatars.githubusercontent.com/u/91855427?v=4" width="100px;"/><br /><sub><a href="https://github.com/JunghyeonShin"><b>JunghyeonShin</b></a></sub><br /></td>
       <td align="center" valign="top" width="14.28%"><img src="https://avatars.githubusercontent.com/u/106418303?v=4" width="100px;"/><br /><sub><a href="https://github.com/daheeParkk"><b>daheeParkk</b></a></sub><br /></td>
